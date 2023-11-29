@@ -30,6 +30,4 @@ npm run dev
 Se abrirá en [http://localhost:3000](http://localhost:3000) con tu navegador para ver el resultado.
 
 ---
-Desarrollado por [ElSaami](https://github.com/ElSaami) mediante la ayuda de varios videos para guiar con la API de Spotify.
----
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Desarrollado por [ElSaami](https://github.com/ElSaami) mediante la ayuda de varios videos para guiar con la API de Spotify 💚.
