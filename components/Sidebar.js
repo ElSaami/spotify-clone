@@ -1,26 +1,52 @@
-import { 
-  HomeIcon, 
-  SearchIcon, 
-  LibraryIcon, 
+import {
+  HomeIcon,
+  SearchIcon,
+  LibraryIcon,
   PlusCircleIcon,
   HeartIcon,
   RssIcon,
   BeakerIcon,
- } from "@heroicons/react/outline";
+} from "@heroicons/react/outline";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import useSpotify from "../hooks/useSpotify";
+
+
 
 function Sidebar() {
+  const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
-  console.log(session);
+  const [playlists, setPlaylists] = useState([]);
+  const [playlistId, setPlaylistId] = useState(null);
+
+  console.log("Elegiste la playlist: ", playlistId);
+
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getUserPlaylists().then((data) => {
+        setPlaylists(data.body.items);
+      });
+    }
+  }, [session, spotifyApi])
+
   return (
-    <div className="text-gray-500 p-5 text-sm border-r border-gray-900">
+    <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide">
       <div className="space-y-4">
+        {/* Recordatorio */}
+        <div className="flex items-center space-x-3 group cursor-pointer">
+          <div className="group-hover:opacity-90">
+            <img className="rounded-full w-10 h-10 flex" src={session?.user.image} title={session?.user.name} alt="" />
+          </div>
+          <div className="group-hover:text-gray-300">
+            <h2 className="font-bold">{session?.user.name}</h2>
+          </div>
+        </div>
         <button className="flex items-center space-x-2 hover:text-white">
           <HomeIcon className="w-5 h-5" />
           <p>Home</p>
         </button>
         <button className="flex items-center space-x-2 hover:text-white">
-          <BeakerIcon className="w-5 h-5" onClick={() => signOut}/>
+          <BeakerIcon className="w-5 h-5" onClick={() => signOut} />
           <p>logout</p>
         </button>
         <button className="flex items-center space-x-2 hover:text-white">
@@ -31,7 +57,7 @@ function Sidebar() {
           <LibraryIcon className="w-5 h-5" />
           <p>Your Library</p>
         </button>
-        <hr className="border-t-[0.1px] border-gray-900"/>
+        <hr className="border-t-[0.1px] border-gray-900" />
 
         <button className="flex items-center space-x-2 hover:text-white" title="Create playlist or folder">
           <PlusCircleIcon className="w-5 h-5" />
@@ -45,15 +71,14 @@ function Sidebar() {
           <RssIcon className="w-5 h-5" />
           <p>Your Episodes</p>
         </button>
-        <hr className="border-t-[0.1px] border-gray-900"/>
+        <hr className="border-t-[0.1px] border-gray-900" />
 
         {/* Playlists */}
-        <p className="cursor-pointer hover:text-white">Playlist name</p>
-        <p className="cursor-pointer hover:text-white">Playlist name</p>
-        <p className="cursor-pointer hover:text-white">Playlist name</p>
-        <p className="cursor-pointer hover:text-white">Playlist name</p>
-        <p className="cursor-pointer hover:text-white">Playlist name</p>
-        <p className="cursor-pointer hover:text-white">Playlist name</p>
+        {playlists.map((playlist) => (
+          <p key={playlist.id} onClick={() => setPlaylistId(playlist.id)} className="cursor-pointer hover:text-white">
+            {playlist.name}
+          </p>
+        ))}
       </div>
     </div>
   );
