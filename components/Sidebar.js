@@ -10,6 +10,8 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import useSpotify from "../hooks/useSpotify";
+import { useRecoilState } from "recoil";
+import { playlistIdState } from "../atoms/playlistAtom";
 
 
 
@@ -17,7 +19,7 @@ function Sidebar() {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
   const [playlists, setPlaylists] = useState([]);
-  const [playlistId, setPlaylistId] = useState(null);
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
   console.log("Elegiste la playlist: ", playlistId);
 
@@ -30,7 +32,7 @@ function Sidebar() {
   }, [session, spotifyApi])
 
   return (
-    <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide">
+    <div className="text-gray-500 p-5 text-sm lg:text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide sm:max-w-[12rem] lg:max-w-[15rem]">
       <div className="space-y-4">
         {/* Recordatorio */}
         <div className="flex items-center space-x-3 group cursor-pointer">
@@ -41,13 +43,12 @@ function Sidebar() {
             <h2 className="font-bold">{session?.user.name}</h2>
           </div>
         </div>
+        <button className="flex items-center space-x-2 hover:text-white" onClick={() => signOut}>
+          <p>Cerrar Sesión</p>
+        </button>
         <button className="flex items-center space-x-2 hover:text-white">
           <HomeIcon className="w-5 h-5" />
           <p>Home</p>
-        </button>
-        <button className="flex items-center space-x-2 hover:text-white">
-          <BeakerIcon className="w-5 h-5" onClick={() => signOut} />
-          <p>logout</p>
         </button>
         <button className="flex items-center space-x-2 hover:text-white">
           <SearchIcon className="w-5 h-5" />
