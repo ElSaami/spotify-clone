@@ -5,7 +5,6 @@ import {
   PlusCircleIcon,
   HeartIcon,
   RssIcon,
-  BeakerIcon,
 } from "@heroicons/react/outline";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -43,9 +42,6 @@ function Sidebar() {
             <h2 className="font-bold">{session?.user.name}</h2>
           </div>
         </div>
-        <button className="flex items-center space-x-2 hover:text-white" onClick={() => signOut}>
-          <p>Cerrar Sesión</p>
-        </button>
         <button className="flex items-center space-x-2 hover:text-white">
           <HomeIcon className="w-5 h-5" />
           <p>Home</p>
