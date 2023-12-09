@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Center from '../components/Center'
 import Sidebar from '../components/Sidebar'
+import Player from '../components/Player';
 import { getSession } from 'next-auth/react';
 
 
@@ -14,7 +15,9 @@ export default function Home() {
         <Sidebar />
         <Center />
       </main>
-      <div>{/* Player */}</div>
+      <div>
+        <Player />
+      </div>
     </div>
   )
 }
