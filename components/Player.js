@@ -51,7 +51,7 @@ function Player() {
               href={songInfo?.album.external_urls?.spotify}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300 hover:underline cursor-pointer"
+              className="hover:underline cursor-pointer"
             >
               {songInfo?.name}
             </a>
