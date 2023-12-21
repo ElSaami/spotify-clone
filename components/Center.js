@@ -52,10 +52,12 @@ function Center() {
   return (
     <div className='flex-grow h-screen overflow-y-scroll scrollbar-hide'>
       <header className="absolute top-5 right-8">
-        <div className="flex items-center bg-black space-x-3 hover:opacity-80 opacity-90 cursor-pointer p-1 pr-2 rounded-full text-white" onClick={async () => {
-          await signOut();
-          router.push('/login'); // Redirige a la página de inicio de sesión
-        }}>
+        <div 
+          className="flex items-center bg-black space-x-3 hover:opacity-80 opacity-90 cursor-pointer p-1 pr-2 rounded-full text-white"
+          onClick={async () => {
+            await signOut({ redirect: false });
+            router.push('/login'); // Redirige a la página de inicio de sesión
+          }}>
           <img
             className="rounded-full w-10 h-10"
             src={session?.user.image}

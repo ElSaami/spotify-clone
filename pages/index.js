@@ -9,6 +9,7 @@ export default function Home() {
   return (
     <div className='bg-black h-screen overflow-hidden'>
       <Head>
+
         <title>Spotify Clone</title>
       </Head>
       <main className='flex'>
@@ -24,6 +25,16 @@ export default function Home() {
 
 export async function getServerSideProps(context){
   const session = await getSession(context);
+
+  if (!session) {
+    // Redirigir al usuario a la página de login si no hay una sesión activa
+    return {
+      redirect: {
+        destination: '/login', // Ruta de la página de login
+        permanent: false,
+      },
+    };
+  }
 
   return{
     props: {
